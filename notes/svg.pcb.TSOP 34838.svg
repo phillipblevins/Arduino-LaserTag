@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generator: Adobe Illustrator 14.0.0, SVG Export Plug-In  -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   id="0"
+   width="24.803148"
+   viewBox="0 0 19.842509 24.094463"
+   height="30.118109"
+   gorn="0"
+   xml:space="preserve"
+   version="1.2"
+   x="0px"
+   y="0px"
+   inkscape:version="0.48.2 r9819"
+   sodipodi:docname="svg.pcb.TSOP 34838_cc24b6f40a28bff3fde4e557b1f9047f_3_pcb.svg"><metadata
+   id="metadata15"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1920"
+   inkscape:window-height="1058"
+   id="namedview13"
+   showgrid="false"
+   inkscape:zoom="12.180633"
+   inkscape:cx="2.7218572"
+   inkscape:cy="31.262769"
+   inkscape:window-x="3192"
+   inkscape:window-y="-8"
+   inkscape:window-maximized="1"
+   inkscape:current-layer="0"
+   units="mm" />
+    <desc
+   id="0.0">
+        <referenceFile
+   id="0.0.0">pcb.svg</referenceFile>
+    </desc>
+    <defs
+   id="0.1" />
+    <g
+   id="copper0"
+   gorn="0.2"
+   transform="translate(0,1.0944563)">
+        <g
+   id="copper1"
+   gorn="0.2.0">
+            <circle
+   id="connector0pin"
+   gorn="0.2.0.0"
+   cx="11.806"
+   cy="3.9920001"
+   r="2.0880001"
+   sodipodi:cx="11.806"
+   sodipodi:cy="3.9920001"
+   sodipodi:rx="2.0880001"
+   sodipodi:ry="2.0880001"
+   style="fill:none;stroke:#ffbf00;stroke-width:1.13390005"
+   d="m 13.894,3.9920001 c 0,1.1531706 -0.93483,2.0880001 -2.088,2.0880001 -1.153171,0 -2.0880003,-0.9348295 -2.0880003,-2.0880001 C 9.7179997,2.8388295 10.652829,1.904 11.806,1.904 c 1.15317,0 2.088,0.9348295 2.088,2.0880001 z" />
+            <circle
+   id="connector1pin"
+   gorn="0.2.0.1"
+   cx="11.806"
+   cy="11.192"
+   r="2.0880001"
+   sodipodi:cx="11.806"
+   sodipodi:cy="11.192"
+   sodipodi:rx="2.0880001"
+   sodipodi:ry="2.0880001"
+   style="fill:none;stroke:#ffbf00;stroke-width:1.13390005"
+   d="m 13.894,11.192 c 0,1.153171 -0.93483,2.088 -2.088,2.088 -1.153171,0 -2.0880003,-0.934829 -2.0880003,-2.088 0,-1.15317 0.9348293,-2.0879997 2.0880003,-2.0879997 1.15317,0 2.088,0.9348297 2.088,2.0879997 z" />
+            <circle
+   id="connector2pin"
+   gorn="0.2.0.2"
+   cx="11.806"
+   cy="25.591999"
+   r="2.0880001"
+   sodipodi:cx="11.806"
+   sodipodi:cy="25.591999"
+   sodipodi:rx="2.0880001"
+   sodipodi:ry="2.0880001"
+   transform="translate(-2.9029977e-8,-7.2193217)"
+   style="fill:none;stroke:#ffbf00;stroke-width:1.13390005"
+   d="m 13.894,25.591999 c 0,1.153171 -0.93483,2.088 -2.088,2.088 -1.153171,0 -2.0880003,-0.934829 -2.0880003,-2.088 0,-1.153171 0.9348293,-2.088 2.0880003,-2.088 1.15317,0 2.088,0.934829 2.088,2.088 z" />
+        </g>
+    </g>
+    <g
+   id="silkscreen"
+   gorn="0.3"
+   transform="matrix(1,0,0,0.76314471,0,1.2128833)">
+        <path
+   id="0.3.0"
+   gorn="0.3.0"
+   d="M 17.475,28.847 H 6.136 c 0,0 0,-5.647 0,-5.647 0,0 -5.636,-1.474 -5.636,-8.26 0,-6.786 5.636,-8.254 5.636,-8.254 V 0.5 h 11.338 v 28.347 z"
+   inkscape:connector-curvature="0"
+   style="fill:none;stroke:#ffffff;stroke-width:1" />
+    </g>
+</svg>

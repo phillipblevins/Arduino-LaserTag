@@ -24,7 +24,6 @@ decode_results results;
 void setup()
 {
   Serial.begin(9600);
-  pinMode(12, OUTPUT);
   irrecv.enableIRIn(); // Start the receiver
 }
 
@@ -92,7 +91,6 @@ void dump(decode_results *results) {
 }
 
 void loop() {
-   digitalWrite(12, HIGH); 
   if (irrecv.decode(&results)) {
     Serial.println(results.value, HEX);
     dump(&results);
