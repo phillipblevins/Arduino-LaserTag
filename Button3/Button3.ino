@@ -32,16 +32,17 @@ const int ledPin =  13;      // the number of the LED pin
 // variables will change:
 int buttonState = 0;         // variable for reading the pushbutton status
 IRsend irsend;
-int lastfire=0;
+unsigned long lastfire=0;
 int firerate=500;
-
+int shots = 0;
 
 void setup() {
+   Serial.begin(9600);
   // initialize the LED pin as an output:
   pinMode(ledPin, OUTPUT);
   // initialize the pushbutton pin as an input:
   pinMode(buttonPin, INPUT);
-  lastfire = mills();
+  lastfire = millis();
 }
 
 void loop() {
@@ -51,8 +52,16 @@ void loop() {
   // check if the pushbutton is pressed.
   // if it is, the buttonState is HIGH:
   if (buttonState == HIGH) {
-        if ((mills()-lastfire)>=firerate) {
+    
+         
+        if ((millis()-lastfire)>=firerate) {
+          shots++;
         irsend.sendMilesTag2Shot(0xC83, 14);
-        lastfire = mills();
+         Serial.print(lastfire, DEC);
+          Serial.print(" ");
+         Serial.print(shots, DEC);
+         
+         Serial.print(" Button Pushed \n");
+        lastfire = millis();}
   }
 }
