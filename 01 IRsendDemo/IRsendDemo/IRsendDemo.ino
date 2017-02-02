@@ -16,6 +16,6 @@ void setup()
 }
 
 void loop() {
-		irsend.sendMilesTag2Shot(0xC83, 14);
+		irsend.sendTagShot(0xC83, 14);
 	delay(5000); //5 second delay between each signal burst
 }

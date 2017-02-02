@@ -1,30 +1,56 @@
 /*
- * IRremote: IRrecvDump - dump details of IR codes with IRrecv
- * An IR detector/demodulator must be connected to the input RECV_PIN.
- * Version 0.1 July, 2009
- * Copyright 2009 Ken Shirriff
- * http://arcfn.com
- * JVC and Panasonic protocol added by Kristian Lauszus (Thanks to zenwheel and other people at the original blog post)
- * LG added by Darryl Smith (based on the JVC protocol)
+  Button
+
+ Turns on and off a light emitting diode(LED) connected to digital
+ pin 13, when pressing a pushbutton attached to pin 2.
+
+
+ The circuit:
+ * LED attached from pin 13 to ground
+ * pushbutton attached to pin 2 from +5V
+ * 10K resistor attached to pin 2 from ground
+
+ * Note: on most Arduinos there is already an LED on the board
+ attached to pin 13.
+
+
+ created 2005
+ by DojoDave <http://www.0j0.org>
+ modified 30 Aug 2011
+ by Tom Igoe
+
+ This example code is in the public domain.
+
+ http://www.arduino.cc/en/Tutorial/Button
  */
-
 #include <IRremote.h>
+// constants won't change. They're used here to
+// set pin numbers:
+const int buttonPin = 2;     // the number of the pushbutton pin
+const int ledPin =  13;      // the number of the LED pin
 
-/* 
-*  Default is Arduino pin D11. 
-*  You can change this to another available Arduino Pin.
-*  Your IR receiver should be connected to the pin defined here
-*/
+// variables will change:
+int buttonState = 0;         // variable for reading the pushbutton status
+IRsend irsend;
+unsigned long lastfire=0;
+int firerate=500;
+int shots = 0;
 int RECV_PIN = 11; 
 
 IRrecv irrecv(RECV_PIN);
 
 decode_results results;
 
-void setup()
-{
-  Serial.begin(9600);
+
+void setup() {
+   Serial.begin(9600);
+  // initialize the LED pin as an output:
+  pinMode(ledPin, OUTPUT);
+  // initialize the pushbutton pin as an input:
+  pinMode(buttonPin, INPUT);
+  lastfire = millis();
   irrecv.enableIRIn(); // Start the receiver
+ // attachInterrupt(0, pin_ISR, CHANGE);
 }
 
 
@@ -90,8 +116,32 @@ void dump(decode_results *results) {
   Serial.println();
 }
 
+void pin_ISR() {
+  buttonState = digitalRead(buttonPin);
+  digitalWrite(ledPin, buttonState);
+}
+
 void loop() {
-  if (irrecv.decode(&results)) {
+  // read the state of the pushbutton value:
+  buttonState = digitalRead(buttonPin);
+
+  // check if the pushbutton is pressed.
+  // if it is, the buttonState is HIGH:
+  if (buttonState == HIGH) {
+    
+         
+        if ((millis()-lastfire)>=firerate) {
+          shots++;
+       irsend.sendTagShot(0xC83, 14);
+         Serial.print(lastfire, DEC);
+          Serial.print(" ");
+         Serial.print(shots, DEC);
+         
+         Serial.print(" Button Pushed \n");
+        lastfire = millis();}
+        irrecv.enableIRIn(); 
+  }
+   if (irrecv.decode(&results)) {
     Serial.println(results.value, HEX);
     dump(&results);
     irrecv.resume(); // Receive the next value
