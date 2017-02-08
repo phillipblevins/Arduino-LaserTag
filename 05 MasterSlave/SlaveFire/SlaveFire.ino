@@ -23,7 +23,8 @@
 
  http://www.arduino.cc/en/Tutorial/Button
  */
-
+#include <Wire.h>
+#include <IRremote.h>
 // constants won't change. They're used here to
 // set pin numbers:
 const int buttonPin = 2;     // the number of the pushbutton pin
@@ -31,12 +32,20 @@ const int ledPin =  13;      // the number of the LED pin
 
 // variables will change:
 int buttonState = 0;         // variable for reading the pushbutton status
+IRsend irsend;
+unsigned long lastfire=0;
+int firerate=500;
+int shots = 0;
 
 void setup() {
+    Wire.begin(8);                // join i2c bus with address #8
+  Wire.onReceive(receiveEvent); // register event
+   Serial.begin(9600);
   // initialize the LED pin as an output:
   pinMode(ledPin, OUTPUT);
   // initialize the pushbutton pin as an input:
   pinMode(buttonPin, INPUT);
+  lastfire = millis();
 }
 
 void loop() {
@@ -46,10 +55,25 @@ void loop() {
   // check if the pushbutton is pressed.
   // if it is, the buttonState is HIGH:
   if (buttonState == HIGH) {
-    // turn LED on:
-    digitalWrite(ledPin, HIGH);
-  } else {
-    // turn LED off:
-    digitalWrite(ledPin, LOW);
+    
+         
+        if ((millis()-lastfire)>=firerate) {
+          shots++;
+        irsend.sendTagShot(0xC83, 14);
+         Serial.print(lastfire, DEC);
+          Serial.print(" ");
+         Serial.print(shots, DEC);
+         
+         Serial.print(" Button Pushed \n");
+        lastfire = millis();}
   }
 }
+
+void receiveEvent(int howMany) {
+  while ( Wire.available()) { // loop through all but the last
+    char x  = Wire.read(); // receive byte as a character
+    Serial.println(x);         // print the character
+  }
+        irsend.sendTagShot(0xC83, 14);
+}
+

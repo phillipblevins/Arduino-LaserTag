@@ -23,35 +23,56 @@
 
  http://www.arduino.cc/en/Tutorial/Button
  */
+#include <Wire.h>
 #include <IRremote.h>
+
 // constants won't change. They're used here to
 // set pin numbers:
 const int buttonPin = 2;     // the number of the pushbutton pin
 const int ledPin =  13;      // the number of the LED pin
-
-// variables will change:
-int buttonState = 0;         // variable for reading the pushbutton status
-IRsend irsend;
-unsigned long lastfire=0;
-int firerate=500;
-int shots = 0;
 int RECV_PIN = 11; 
 
 IRrecv irrecv(RECV_PIN);
 
 decode_results results;
 
+byte x = 0;
+// variables will change:
+int buttonState = 0;         // variable for reading the pushbutton status
 
 void setup() {
-   Serial.begin(9600);
   // initialize the LED pin as an output:
   pinMode(ledPin, OUTPUT);
   // initialize the pushbutton pin as an input:
   pinMode(buttonPin, INPUT);
-  lastfire = millis();
-  irrecv.enableIRIn(); // Start the receiver
- // attachInterrupt(0, pin_ISR, CHANGE);
+   Wire.begin(); // join i2c bus (address optional for master)
 }
+
+void loop() {
+  // read the state of the pushbutton value:
+  buttonState = digitalRead(buttonPin);
+  if (irrecv.decode(&results)) {
+    Serial.println(results.value, HEX);
+    dump(&results);
+    irrecv.resume(); // Receive the next value
+  }
+  // check if the pushbutton is pressed.
+  // if it is, the buttonState is HIGH:
+  if (buttonState == HIGH) {
+    // turn LED on:
+    digitalWrite(ledPin, HIGH);
+     Wire.beginTransmission(8); // transmit to device #8
+  Wire.write(0xC83);        // sends five bytes
+  Wire.endTransmission(); 
+  } else {
+    // turn LED off:
+    digitalWrite(ledPin, LOW);
+  }
+}
+
+
+
+
 
 
 void dump(decode_results *results) {
@@ -65,8 +86,8 @@ void dump(decode_results *results) {
     Serial.print("Decoded NEC: ");
 
   }
-   else if (results->decode_type == MILESTAG2SHOT) {
-    Serial.print("Decoded MILESTAG2SHOT: ");
+   else if (results->decode_type == TAGSHOT) {
+    Serial.print("Decoded TAGSHOT: ");
 
   }
   else if (results->decode_type == SONY) {
@@ -116,34 +137,3 @@ void dump(decode_results *results) {
   Serial.println();
 }
 
-void pin_ISR() {
-  buttonState = digitalRead(buttonPin);
-  digitalWrite(ledPin, buttonState);
-}
-
-void loop() {
-  // read the state of the pushbutton value:
-  buttonState = digitalRead(buttonPin);
-
-  // check if the pushbutton is pressed.
-  // if it is, the buttonState is HIGH:
-  if (buttonState == HIGH) {
-    
-         
-        if ((millis()-lastfire)>=firerate) {
-          shots++;
-       irsend.sendMilesTag2Shot(0xC83, 14);
-         Serial.print(lastfire, DEC);
-          Serial.print(" ");
-         Serial.print(shots, DEC);
-         
-         Serial.print(" Button Pushed \n");
-        lastfire = millis();}
-        irrecv.enableIRIn(); 
-  }
-   if (irrecv.decode(&results)) {
-    Serial.println(results.value, HEX);
-    dump(&results);
-    irrecv.resume(); // Receive the next value
-  }
-}
