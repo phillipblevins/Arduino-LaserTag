@@ -1,25 +1,5 @@
 /*
-  Button
-
- Turns on and off a light emitting diode(LED) connected to digital
- pin 13, when pressing a pushbutton attached to pin 2.
-
-
- The circuit:
- * LED attached from pin 13 to ground
- * pushbutton attached to pin 2 from +5V
- * 10K resistor attached to pin 2 from ground
-
- * Note: on most Arduinos there is already an LED on the board
- attached to pin 13.
-
-
- created 2005
- by DojoDave <http://www.0j0.org>
- modified 30 Aug 2011
- by Tom Igoe
-
- This example code is in the public domain.
+Use a button to send IR shot
 
  http://www.arduino.cc/en/Tutorial/Button
  */
@@ -45,12 +25,14 @@ decode_results results;
 void setup() {
    Serial.begin(9600);
   // initialize the LED pin as an output:
+
   pinMode(ledPin, OUTPUT);
   // initialize the pushbutton pin as an input:
+  
   pinMode(buttonPin, INPUT);
   lastfire = millis();
   irrecv.enableIRIn(); // Start the receiver
- // attachInterrupt(0, pin_ISR, CHANGE);
+
 }
 
 
@@ -116,12 +98,17 @@ void dump(decode_results *results) {
   Serial.println();
 }
 
-void pin_ISR() {
-  buttonState = digitalRead(buttonPin);
-  digitalWrite(ledPin, buttonState);
-}
+
 
 void loop() {
+
+     if (irrecv.decode(&results)) {
+    Serial.println(results.value, HEX);
+    dump(&results);
+    irrecv.resume(); // Receive the next value
+  }
+
+  
   // read the state of the pushbutton value:
   buttonState = digitalRead(buttonPin);
 
@@ -133,17 +120,14 @@ void loop() {
         if ((millis()-lastfire)>=firerate) {
           shots++;
        irsend.sendTagShot(0xC83, 14);
+       irrecv.enableIRIn();
          Serial.print(lastfire, DEC);
           Serial.print(" ");
          Serial.print(shots, DEC);
          
          Serial.print(" Button Pushed \n");
-        lastfire = millis();}
-        irrecv.enableIRIn(); 
+        lastfire = millis();
+         }
   }
-   if (irrecv.decode(&results)) {
-    Serial.println(results.value, HEX);
-    dump(&results);
-    irrecv.resume(); // Receive the next value
-  }
+
 }

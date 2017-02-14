@@ -52,21 +52,7 @@ void loop() {
   // read the state of the pushbutton value:
   buttonState = digitalRead(buttonPin);
 
-  // check if the pushbutton is pressed.
-  // if it is, the buttonState is HIGH:
-  if (buttonState == HIGH) {
-    
-         
-        if ((millis()-lastfire)>=firerate) {
-          shots++;
-        irsend.sendTagShot(0xC83, 14);
-         Serial.print(lastfire, DEC);
-          Serial.print(" ");
-         Serial.print(shots, DEC);
-         
-         Serial.print(" Button Pushed \n");
-        lastfire = millis();}
-  }
+
 }
 
 void receiveEvent(int howMany) {
@@ -74,6 +60,11 @@ void receiveEvent(int howMany) {
     char x  = Wire.read(); // receive byte as a character
     Serial.println(x);         // print the character
   }
+        Serial.println("hello");  
         irsend.sendTagShot(0xC83, 14);
+          Wire.onReceive(receiveEvent); // register event
+   Serial.begin(9600);
+         Serial.println("hello");  
 }
+
 
